@@ -1,6 +1,6 @@
 "use strict";
 
-import "../node/index.js";
+import "adaptive-extender";
 
 //#region CEL
 interface CELExpression {
@@ -186,6 +186,8 @@ class CEL {
 		return self;
 	}
 	//#endregion
+
+	static #placeholder: symbol = Symbol();
 
 	//#region Builder
 	static #Builder: CELBuilderConstructor = class Builder<T extends any[]> implements CELBuilder<T> {
@@ -460,8 +462,6 @@ class CEL {
 		return self;
 	}
 	//#endregion
-
-	static #placeholder: symbol = Symbol();
 
 	static #builder: CELLeftInitializer<[]> = CEL.#newLeftInitializer([String.empty], []);
 	static get builder(): CELLeftInitializer<[]> {

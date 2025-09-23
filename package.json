@@ -15,7 +15,13 @@
 		"type": "git",
 		"url": "git+https://github.com/eccs0103/cel-builder.git"
 	},
-	"keywords": [ "javascript", "typescript", "cel", "builder", "node" ],
+	"keywords": [
+		"javascript",
+		"typescript",
+		"cel",
+		"builder",
+		"node"
+	],
 	"author": "eccs0103",
 	"license": "MIT",
 	"bugs": {
@@ -24,10 +30,8 @@
 	"homepage": "https://github.com/eccs0103/cel-builder#readme",
 	"scripts": {
 		"build": "tsc -p ./src/tsconfig.json",
-
 		"pretest": "npm run build",
 		"test": "mocha",
-
 		"start": "npm test"
 	},
 	"devDependencies": {
@@ -35,5 +39,8 @@
 		"mocha": "^11.7.1",
 		"ts-node": "^10.9.2",
 		"typescript": "^5.9.2"
+	},
+	"dependencies": {
+		"adaptive-extender": "^0.5.0"
 	}
 }
