@@ -1,0 +1,39 @@
+{
+	"name": "cel-builder",
+	"version": "0.8.0",
+	"type": "module",
+	"main": "./dist/cel-builder.js",
+	"types": "./dist/cel-builder.d.ts",
+	"exports": {
+		".": {
+			"import": "./dist/cel-builder.js",
+			"require": "./dist/ccel-builder.js",
+			"types": "./dist/cel-builder.d.ts"
+		}
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/eccs0103/cel-builder.git"
+	},
+	"keywords": [ "javascript", "typescript", "cel", "builder", "node" ],
+	"author": "eccs0103",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/eccs0103/cel-builder/issues"
+	},
+	"homepage": "https://github.com/eccs0103/cel-builder#readme",
+	"scripts": {
+		"build": "tsc -p ./src/tsconfig.json",
+
+		"pretest": "npm run build",
+		"test": "mocha",
+
+		"start": "npm test"
+	},
+	"devDependencies": {
+		"@types/mocha": "^10.0.10",
+		"mocha": "^11.7.1",
+		"ts-node": "^10.9.2",
+		"typescript": "^5.9.2"
+	}
+}
