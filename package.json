@@ -1,13 +1,13 @@
 {
 	"name": "cel-builder",
-	"version": "0.8.0",
+	"version": "0.8.1",
 	"type": "module",
 	"main": "./dist/cel-builder.js",
 	"types": "./dist/cel-builder.d.ts",
 	"exports": {
 		".": {
 			"import": "./dist/cel-builder.js",
-			"require": "./dist/ccel-builder.js",
+			"require": "./dist/cel-builder.js",
 			"types": "./dist/cel-builder.d.ts"
 		}
 	},
