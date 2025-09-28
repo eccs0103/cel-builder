@@ -1,16 +1,24 @@
 {
 	"compilerOptions": {
+		/* Language & Environment */
 		"target": "ES2016",
-		"lib": [ "ES2016" ],
 		"module": "CommonJS",
-		"outDir": "./dist",
+		"lib": [ "ES2016" ],
+
+		/* Interop & Compatibility */
 		"esModuleInterop": true,
-		"forceConsistentCasingInFileNames": true,
-		"strict": true,
-		"sourceMap": true,
-		"declaration": true,
 		"allowJs": true,
-		"skipLibCheck": true
+		"skipLibCheck": true,
+
+		/* Emit & Declarations */
+		"declaration": true,
+		"sourceMap": true,
+
+		/* Type Checking & Linting */
+		"strict": true,
+
+		/* Miscellaneous */
+		"forceConsistentCasingInFileNames": true,
 	},
-	"include": [ "./**/*" ]
+	"include": [ "./*.ts" ]
 }

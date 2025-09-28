@@ -1,6 +1,7 @@
 {
 	"name": "cel-builder",
-	"version": "0.8.1",
+	"description": "A type-safe, fluent-interface builder for creating CEL expressions in TypeScript and JavaScript",
+	"version": "0.8.2",
 	"type": "module",
 	"main": "./dist/cel-builder.js",
 	"types": "./dist/cel-builder.d.ts",
@@ -15,13 +16,7 @@
 		"type": "git",
 		"url": "git+https://github.com/eccs0103/cel-builder.git"
 	},
-	"keywords": [
-		"javascript",
-		"typescript",
-		"cel",
-		"builder",
-		"node"
-	],
+	"keywords": [ "javascript", "typescript", "cel", "builder", "node" ],
 	"author": "eccs0103",
 	"license": "MIT",
 	"bugs": {
@@ -30,17 +25,15 @@
 	"homepage": "https://github.com/eccs0103/cel-builder#readme",
 	"scripts": {
 		"build": "tsc -p ./src/tsconfig.json",
-		"pretest": "npm run build",
-		"test": "mocha",
-		"start": "npm test"
+		"test": "vitest",
+		"coverage": "vitest run --coverage"
 	},
 	"devDependencies": {
-		"@types/mocha": "^10.0.10",
-		"mocha": "^11.7.1",
-		"ts-node": "^10.9.2",
-		"typescript": "^5.9.2"
+		"typescript": "^5.9.2",
+		"vitest": "^3.2.4"
 	},
 	"dependencies": {
-		"adaptive-extender": "^0.5.0"
+		"@types/node": "^24.5.2",
+		"adaptive-extender": "^0.6.0"
 	}
 }

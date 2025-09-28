@@ -1,6 +1,6 @@
 "use strict";
 
-import "adaptive-extender";
+import "adaptive-extender/core";
 
 //#region CEL
 interface CELExpression {
@@ -117,14 +117,11 @@ class CEL {
 			return this.toString();
 		}
 	};
-	static get Expression(): CELExpressionConstructor {
-		return this.#Expression;
-	}
 
 	static #lockExpression: boolean = true;
 	static #newExpression(expression: string): CELExpression {
 		CEL.#lockExpression = false;
-		const self = new CEL.Expression(expression);
+		const self = new CEL.#Expression(expression);
 		CEL.#lockExpression = true;
 		return self;
 	}
@@ -206,7 +203,8 @@ class CEL {
 			while (true) {
 				if (literals.length - 1 <= index) break;
 				const placeholder = ReferenceError.suppress(placeholders[index], "A");
-				placeholder.value = ReferenceError.suppress(args[index]); /** @todo Throw missed arg */;
+				if (index >= args.length) throw new ReferenceError(`Argument for placeholder ${index} not provided`)
+				placeholder.value = args[index];
 				index++;
 				expression += String(placeholder);
 				expression += literals[index];
@@ -214,9 +212,6 @@ class CEL {
 			return CEL.#newExpression(expression);
 		}
 	};
-	static get Builder(): CELBuilderConstructor {
-		return this.#Builder;
-	}
 
 	static #lockBuilder: boolean = true;
 	//#endregion
@@ -247,14 +242,11 @@ class CEL {
 			return CEL.#newLeftStatement(literals, placeholders);
 		}
 	};
-	static get LeftInitializer(): CELLeftInitializerConstructor {
-		return this.#LeftInitializer;
-	}
 
 	static #lockLeftInitializer: boolean = true;
 	static #newLeftInitializer<T extends any[]>(literals: string[], placeholders: CELPlaceholder[]): CELLeftInitializer<T> {
 		CEL.#lockLeftInitializer = false;
-		const self = new CEL.LeftInitializer<T>(literals, placeholders);
+		const self = new CEL.#LeftInitializer<T>(literals, placeholders);
 		CEL.#lockLeftInitializer = true;
 		return self;
 	}
@@ -305,20 +297,17 @@ class CEL {
 			return CEL.#newRightInitializer(literals, placeholders);
 		}
 	};
-	static get LeftOperand(): CELLeftOperandConstructor {
-		return this.#LeftOperand;
-	}
 
 	static #lockLeftOperand: boolean = true;
 	static #newLeftOperand<T extends any[]>(literals: string[], placeholders: CELPlaceholder[]): CELLeftOperand<T> {
 		CEL.#lockLeftOperand = false;
-		const self = new CEL.LeftOperand<T>(literals, placeholders);
+		const self = new CEL.#LeftOperand<T>(literals, placeholders);
 		CEL.#lockLeftOperand = true;
 		return self;
 	}
 	//#endregion
 	//#region LeftStatement
-	static #LeftStatement: CELLeftStatementConstructor = class LeftStatement<T extends any[]> extends CEL.LeftOperand<T> implements CELLeftStatement<T> {
+	static #LeftStatement: CELLeftStatementConstructor = class LeftStatement<T extends any[]> extends CEL.#LeftOperand<T> implements CELLeftStatement<T> {
 		#literals: string[];
 		#placeholders: CELPlaceholder[];
 		constructor(literals: string[], placeholders: CELPlaceholder[]) {
@@ -337,15 +326,12 @@ class CEL {
 			return CEL.#newLeftStatement(literals, placeholders);
 		}
 	};
-	static get LeftStatement(): CELLeftStatementConstructor {
-		return this.#LeftStatement;
-	}
 
 	static #lockLeftStatement: boolean = true;
 	static #newLeftStatement<T extends any[]>(literals: string[], placeholders: CELPlaceholder[]): CELLeftStatement<T> {
 		CEL.#lockLeftOperand = false;
 		CEL.#lockLeftStatement = false;
-		const self = new CEL.LeftStatement<T>(literals, placeholders);
+		const self = new CEL.#LeftStatement<T>(literals, placeholders);
 		CEL.#lockLeftOperand = true;
 		CEL.#lockLeftStatement = true;
 		return self;
@@ -377,20 +363,17 @@ class CEL {
 			return CEL.#newRightStatement(literals, placeholders);
 		}
 	};
-	static get RightInitializer(): CELRightInitializerConstructor {
-		return this.#RightInitializer;
-	}
 
 	static #lockRightInitializer: boolean = true;
 	static #newRightInitializer<T extends any[]>(literals: string[], placeholders: CELPlaceholder[]): CELRightInitializer<T> {
 		CEL.#lockRightInitializer = false;
-		const self = new CEL.RightInitializer<T>(literals, placeholders);
+		const self = new CEL.#RightInitializer<T>(literals, placeholders);
 		CEL.#lockRightInitializer = true;
 		return self;
 	}
 	//#endregion
 	//#region RightOperand
-	static #RightOperand: CELRightOperandConstructor = class RightOperand<T extends any[]> extends CEL.Builder<T> implements CELRightOperand<T> {
+	static #RightOperand: CELRightOperandConstructor = class RightOperand<T extends any[]> extends CEL.#Builder<T> implements CELRightOperand<T> {
 		#literals: string[];
 		#placeholders: CELPlaceholder[];
 		constructor(literals: string[], placeholders: CELPlaceholder[]) {
@@ -412,22 +395,19 @@ class CEL {
 			return CEL.#newLeftInitializer(literals, placeholders);
 		}
 	};
-	static get RightOperand(): CELRightOperandConstructor {
-		return this.#RightOperand;
-	}
 
 	static #lockRightOperand: boolean = true;
 	static #newRightOperand<T extends any[]>(literals: string[], placeholders: CELPlaceholder[]): CELRightOperand<T> {
 		CEL.#lockBuilder = false;
 		CEL.#lockRightOperand = false;
-		const self = new CEL.RightOperand<T>(literals, placeholders);
+		const self = new CEL.#RightOperand<T>(literals, placeholders);
 		CEL.#lockBuilder = true;
 		CEL.#lockRightOperand = true;
 		return self;
 	}
 	//#endregion
 	//#region RightStatement
-	static #RightStatement: CELRightStatementConstructor = class RightStatement<T extends any[]> extends CEL.RightOperand<T> implements CELRightStatement<T> {
+	static #RightStatement: CELRightStatementConstructor = class RightStatement<T extends any[]> extends CEL.#RightOperand<T> implements CELRightStatement<T> {
 		#literals: string[];
 		#placeholders: CELPlaceholder[];
 		constructor(literals: string[], placeholders: CELPlaceholder[]) {
@@ -446,16 +426,13 @@ class CEL {
 			return CEL.#newRightStatement(literals, placeholders);
 		}
 	};
-	static get RightStatement(): CELRightStatementConstructor {
-		return this.#RightStatement;
-	}
 
 	static #lockRightStatement: boolean = true;
 	static #newRightStatement<T extends any[]>(literals: string[], placeholders: CELPlaceholder[]): CELRightStatement<T> {
 		CEL.#lockBuilder = false;
 		CEL.#lockRightOperand = false;
 		CEL.#lockRightStatement = false;
-		const self = new CEL.RightStatement<T>(literals, placeholders);
+		const self = new CEL.#RightStatement<T>(literals, placeholders);
 		CEL.#lockBuilder = true;
 		CEL.#lockRightOperand = true;
 		CEL.#lockRightStatement = true;
