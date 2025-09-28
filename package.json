@@ -1,7 +1,7 @@
 {
 	"name": "cel-builder",
 	"description": "A type-safe, fluent-interface builder for creating CEL expressions in TypeScript and JavaScript",
-	"version": "0.8.2",
+	"version": "0.8.3",
 	"type": "module",
 	"main": "./dist/cel-builder.js",
 	"types": "./dist/cel-builder.d.ts",
@@ -18,7 +18,7 @@
 	},
 	"keywords": [ "javascript", "typescript", "cel", "builder", "node" ],
 	"author": "eccs0103",
-	"license": "MIT",
+	"license": "Apache-2.0",
 	"bugs": {
 		"url": "https://github.com/eccs0103/cel-builder/issues"
 	},
